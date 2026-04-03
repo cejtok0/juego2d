@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Juego 2D</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Juego Esquiva Cuadrados</h1>
+
+<div class="login">
+
+<h2>Login</h2>
+<input id="nick" placeholder="Nick">
+<input id="pin" type="password" placeholder="PIN">
+<button onclick="login()">Entrar</button>
+
+<h2>Registro</h2>
+<input id="nickr" placeholder="Nick">
+<input id="pinr" type="password" placeholder="PIN">
+<button onclick="register()">Registrarse</button>
+
+</div>
+
+<script>
+
+function login(){
+let nick=document.getElementById("nick").value;
+let pin=document.getElementById("pin").value;
+
+fetch("login.php",{
+method:"POST",
+headers:{'Content-Type':'application/x-www-form-urlencoded'},
+body:"nick="+nick+"&pin="+pin
+})
+.then(r=>r.text())
+.then(d=>{
+if(d=="ok"){
+localStorage.setItem("nick",nick);
+location="game.html";
+}else{
+alert("Login incorrecto");
+}
+});
+}
+
+function register(){
+let nick=document.getElementById("nickr").value;
+let pin=document.getElementById("pinr").value;
+
+fetch("register.php",{
+method:"POST",
+headers:{'Content-Type':'application/x-www-form-urlencoded'},
+body:"nick="+nick+"&pin="+pin
+})
+.then(r=>r.text())
+.then(d=>alert(d));
+}
+
+</script>
+
+</body>
+</html>
